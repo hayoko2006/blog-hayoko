@@ -7,67 +7,24 @@
     <%- partial('_partial/configcss/imageShow') %>
 
     <body>
+        <script src="/js/darkmode-js.min.js"></script>
         <% if(theme.tool.darkMode) { %>
-        <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.80/darkreader.min.js"></script>
         <script>
-            const drOptions = {
-                brightness: 100,
-                contrast: 95,
-                sepia: 10,
-                darkSchemeTextColor: '#e0e0e0',  // 粉笔白文字
-                darkSchemeBackgroundColor: '#1e1e1e', // 黑板灰背景
-                scrollbarStyle: 'native'
-            };
-
-            const savedTheme = localStorage.getItem('theme');
-            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-                DarkReader.enable(drOptions);
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: '<% if(theme.color.enable) { %> <%=theme.color.background %>  <% } else { %> #e4e4e4 <%}%>',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
             }
-
-            window.addEventListener('DOMContentLoaded', () => {
-                const btn = document.createElement('button');
-                btn.innerText = '🌓';
-                // 按钮样式：仿照你之前的布局，放在右下角
-                btn.style.cssText = `
-                    position: fixed; 
-                    bottom: 40px; 
-                    left: 42px; 
-                    z-index: 9999;
-                    width: 44px; 
-                    height: 44px; 
-                    border-radius: 50%; 
-                    border: 1px solid #ccc;
-                    background: #f7f5ed; 
-                    color: #000;
-                    font-size: 22px; 
-                    cursor: pointer;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-                    transition: transform 0.2s, background-color 0.3s;
-                `;
-                // 根据当前状态初始化按钮颜色
-                if (DarkReader.isEnabled()) {
-                    btn.style.backgroundColor = '#1e1e1e';
-                    btn.style.color = '#fff';
-                }
-                btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
-                btn.onmouseout = () => btn.style.transform = 'scale(1)';
-                document.body.appendChild(btn);
-                // 点击切换逻辑
-                btn.addEventListener('click', () => {
-                    if (DarkReader.isEnabled()) {
-                        DarkReader.disable();
-                        localStorage.setItem('theme', 'light');
-                        btn.style.backgroundColor = '#f7f5ed';
-                        btn.style.color = '#000';
-                    } else {
-                        DarkReader.enable(drOptions);
-                        localStorage.setItem('theme', 'dark');
-                        btn.style.backgroundColor = '#1e1e1e';
-                        btn.style.color = '#fff';
-                    }
-                });
-            });
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
         </script>
         <% } %>
         <% if(theme.tool.leftToc) { %>
