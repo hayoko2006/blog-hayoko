@@ -119,7 +119,8 @@ baidusitemap:
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: git
-  repo: https://github.com/hayoko2006/hayoko2006.github.io.git
-  branch: main
+#部署到github pages 但我已经使用别的服务了。
+#deploy:
+#  type: git
+#  repo: https://github.com/hayoko2006/hayoko2006.github.io.git
+#  branch: main
