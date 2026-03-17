@@ -190,4 +190,4 @@ inject:
   #css: css/custom.css # 找到该文件后，编写你的css样式，每个页面都会自动引入
   css: css/custom.css # 找到该文件后，编写你的css样式，每个页面都会自动引入
 
-version: v2.0.0
+version: v2.0.1
