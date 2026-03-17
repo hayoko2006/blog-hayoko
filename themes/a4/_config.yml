@@ -9,14 +9,14 @@ menu:
   关于: /about/ # 需要hexo new page about
   标签: /tags/ #需要hexo new page tags
   分类: /categories/ # 需要hexo new page categories
-
+  日常: /daily/
 # 首页你想要展示的menu链接，注意当你修改了menu中的别名，这里要随着更改，不然你会疑惑怎么首页没有修改后的别名
 showInMenu:  # menu 中的哪些页面显示在首页中（“首页”必定显示）
   - 文章  # 将在首页显示 文章 链接
   - 关于
   - 标签
   - 分类
-
+  - 日常
 index:  # 首页相关配置
   header:  # 首页的页眉 以及 404页面，当你没开启一言，将会每次刷新页面随机展示下面的语句
     - "热爱计算机、医学和美剧"

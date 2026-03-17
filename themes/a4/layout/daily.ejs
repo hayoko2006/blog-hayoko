@@ -1,0 +1,136 @@
+<%- include('_partial/head') %>
+<%- include('_partial/header') %>
+
+<div class="container">
+  <div class="daily-page">
+    <h1 class="daily-title">日常</h1>
+    
+    <!-- 动态列表 -->
+    <div class="daily-feed">
+      <%- page.content %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .daily-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .daily-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .daily-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* 朋友圈动态样式 */
+  .moments-post {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  
+  .moments-post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .moments-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .moments-user-info {
+    flex: 1;
+  }
+  
+  .moments-username {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .moments-time {
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+  }
+  
+  .moments-content {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .moments-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .moments-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .moments-image:hover {
+    transform: scale(1.02);
+  }
+  
+  .moments-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  .moments-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .moments-action-btn:hover {
+    color: #4f7dde;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .daily-page {
+      padding: 10px;
+    }
+    
+    .moments-images {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
+</style>
+
+<%- include('_partial/footer') %>
