@@ -60,7 +60,13 @@
             </div>
     <% } %>
 
-    <div class="post-md">
+    <div class="post-md"
+        <% if((page.paginate && page.paginate == true) || (theme.tool.paginate && (!page.hasOwnProperty('paginate') || page.paginate != false))) { %>
+            data-paginate="true"
+            data-page-size="<%= page.pageSize || theme.pageEngine.pageSize || 'A4' %>"
+            data-margin="<%= page.margin || theme.pageEngine.margin || 20 %>"
+            data-spacing="<%= page.spacing || theme.pageEngine.spacing || 20 %>"
+        <% } %>>
         <% if(theme.tool.topToc) { %>
             <% if(is_post() && (!('topToc' in page) || page.topToc == true)) { %>
                 <%- toc(page.content, {
@@ -131,6 +137,41 @@
     
         <% } %>
     <% } %>
+    
+    <% if (page.content) { 
+           const tocData = extractTocFromHtml(page.content, { maxDepth: 3, minDepth: 1 });
+    %>
+    <script>
+        // 将TOC数据暴露给前端使用
+        window.pageTOC = <%- JSON.stringify(tocData) %>;
+        console.log('文章TOC数据结构:', window.pageTOC);
+        
+        // 如果标题没有ID，自动添加（增强锚点功能）
+        document.addEventListener('DOMContentLoaded', function() {
+            const headings = document.querySelectorAll('h1, h2, h3');
+            headings.forEach(function(heading, index) {
+                if (!heading.id) {
+                    // 生成简单ID
+                    const text = heading.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '');
+                    heading.id = text || 'heading-' + (index + 1);
+                }
+            });
+        });
+    </script>
+    <% } else { %>
+    <script>
+        window.pageTOC = [];
+    </script>
+    <% } %>
+    
+    <!-- Word导航窗格组件 -->
+    <%- js('js/word-nav.js') %>
+    
+    <!-- 分页引擎组件（最终版） -->
+    <%- js('js/page-engine-final.js') %>
+    
+    <!-- 文档显示模式切换器 -->
+    <%- js('js/document-mode-switcher.js') %>
 
     <% if (!page.hasOwnProperty('comment') || page.comment == true) { %>
         <%- partial('_partial/comments/comment') %>

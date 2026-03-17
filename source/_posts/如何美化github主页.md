@@ -4,6 +4,7 @@ date: 2026-03-16 10:00:00
 tags: [GitHub, 个人主页, 美化, README]
 categories: [技术教程]
 description: 详细记录如何美化GitHub个人主页的完整过程，包括基本构成要素、准备工作、个性化配置方法、常见美化技巧与最佳实践。
+paginate: true
 ---
 
 # 如何美化GitHub主页详细教程

@@ -55,7 +55,8 @@ tool:
   returnToLast: true # 回退页面按钮
   topToc: true # 文章顶部目录
   leftToc: true # 文章左侧目录 目前仅支持大屏幕浮现
-  recentUpdatePost: true # list页面将会新增一个“最近更新”模块，展示最近3篇文章，最近更新可点击跳转至 "最近更新列表页面"
+  recentUpdatePost: true # list页面将会新增一个"最近更新"模块，展示最近3篇文章，最近更新可点击跳转至 "最近更新列表页面"
+  paginate: false # 启用文章分页引擎，模拟Word分页效果
   # A4启动将会自动创建“最近更新页面”：url为 /recent-updates 请自行使用
   # 如果你发现你的最近更新时间总是当天部署的时间，请看 https://ninojay.top/2023/writeByGithub-2/#2024.09.26更新说明
 
@@ -91,6 +92,12 @@ listInfo:
   hoverStyle: underline # box | circle | underline | highlight | strike-through | crossed-off # 鼠标悬浮在文章列表上时的样式
   hoverColor: "#4f7dde" # 鼠标悬浮在文章列表上时的颜色
   animationDuration: 800 # 鼠标悬浮在文章列表上时的动画时长,单位ms毫秒
+
+# 分页引擎配置
+pageEngine:
+  pageSize: A4  # 页面尺寸：A4, B5, A3
+  margin: 20    # 页边距（单位：mm）
+  spacing: 20   # 页面间距（单位：px）
 
 # 你可能会用到的 https://ninojay.top/2023/website-cdn/
 cdn:

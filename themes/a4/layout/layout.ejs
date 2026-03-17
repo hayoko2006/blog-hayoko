@@ -5,6 +5,7 @@
     <%- partial('_partial/configcss/width') %>
     <%- partial('_partial/configcss/color') %>
     <%- partial('_partial/configcss/imageShow') %>
+    <link rel="stylesheet" href="<%= url_for('/css/document-mode-switcher.css') %>">
 
     <body>
         <script src="/js/darkmode-js.min.js"></script>
@@ -27,15 +28,15 @@
             darkmode.showWidget();
         </script>
         <% } %>
-        <% if(theme.tool.leftToc) { %>
-            <% if(is_post() && (!('leftToc' in page) || page.leftToc == true)) { %>
-                <div class="left-toc-container">
-                    <nav id="toc" class="bs-docs-sidebar"></nav>
-                </div>
-            <% } %>
-        <% } %>
-        <div class="paper">
 
+        <div class="paper <%= is_post() ? 'word-layout' : '' %>">
+            <% if(theme.tool.leftToc) { %>
+                <% if(is_post() && (!('leftToc' in page) || page.leftToc == true)) { %>
+                    <div class="left-toc-container">
+                        <nav id="toc" class="bs-docs-sidebar"></nav>
+                    </div>
+                <% } %>
+            <% } %>
             <% var tags,tagsInside, categories, categoriesInside; %>
 
             <% if(path == "index.html") { %>

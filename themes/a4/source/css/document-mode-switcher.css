@@ -1,0 +1,355 @@
+.doc-mode-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+}
+
+.doc-mode-switcher-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(224, 224, 224, 0.8);
+}
+
+.doc-mode-switcher-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.doc-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #333;
+}
+
+.doc-mode-toggle:hover {
+  background: #e8e8e8;
+  border-color: #d0d0d0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.doc-mode-icon {
+  font-size: 16px;
+  transition: opacity 0.2s ease;
+}
+
+.doc-mode-icon.paginated {
+  opacity: 1;
+}
+
+.doc-mode-icon.continuous {
+  opacity: 0.5;
+}
+
+.doc-mode-label {
+  font-weight: 500;
+}
+
+.doc-mode-size-selector,
+.doc-mode-zoom-selector {
+  position: relative;
+}
+
+.doc-size-select,
+.doc-zoom-select {
+  padding: 8px 32px 8px 12px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.2s ease;
+}
+
+.doc-size-select:hover,
+.doc-zoom-select:hover {
+  background: #e8e8e8;
+  border-color: #d0d0d0;
+}
+
+.doc-size-select:focus,
+.doc-zoom-select:focus {
+  outline: none;
+  border-color: #4f7dde;
+  box-shadow: 0 0 0 2px rgba(79, 125, 222, 0.1);
+}
+
+.doc-mode-size-selector::after,
+.doc-mode-zoom-selector::after {
+  content: '▼';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: #666;
+  pointer-events: none;
+}
+
+.doc-page-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #666;
+}
+
+.doc-page-current {
+  font-weight: 600;
+  color: #4f7dde;
+}
+
+.doc-page-separator {
+  color: #999;
+}
+
+/* 页面导航样式 */
+.doc-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #666;
+}
+
+.doc-nav-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.doc-nav-btn:hover:not(:disabled) {
+  background: #4f7dde;
+  color: white;
+  border-color: #4f7dde;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.doc-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.doc-nav-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.doc-nav-input {
+  width: 60px;
+  padding: 6px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+}
+
+.doc-nav-input:focus {
+  outline: none;
+  border-color: #4f7dde;
+  box-shadow: 0 0 0 2px rgba(79, 125, 222, 0.1);
+}
+
+.doc-nav-separator {
+  color: #999;
+}
+
+.doc-nav-total {
+  color: #666;
+  font-weight: 500;
+}
+
+/* 分页模式样式 */
+.doc-page {
+  width: 794px;
+  min-height: 1123px;
+  background: white;
+  margin: 0 auto 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  position: relative;
+  box-sizing: border-box;
+  page-break-inside: avoid;
+  transition: all 300ms ease;
+}
+
+.doc-page-content {
+  width: 714px;
+  min-height: 1043px;
+  max-height: 1043px;
+  padding: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.doc-page-footer {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #666;
+  font-size: 12px;
+  font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+  width: 100%;
+}
+
+/* 响应式设计 */
+@media (max-width: 900px) {
+  .doc-mode-switcher {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .doc-mode-switcher-container {
+    padding: 8px;
+  }
+  
+  .doc-mode-switcher-group {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  
+  .doc-mode-toggle,
+  .doc-size-select,
+  .doc-zoom-select,
+  .doc-page-indicator {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .doc-page {
+    width: 100%;
+    min-height: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .doc-page-content {
+    width: 100%;
+    min-height: 0;
+    max-height: none;
+    padding: 20px;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .doc-mode-switcher {
+    display: none !important;
+  }
+  
+  .doc-page {
+    box-shadow: none !important;
+    margin: 0 !important;
+    border: 1px solid #ddd !important;
+    page-break-after: always;
+  }
+  
+  .doc-page-content {
+    padding: 2cm !important;
+  }
+}
+
+/* 动画效果 */
+.doc-page {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 深色模式适配 */
+.darkmode--activated .doc-mode-switcher-container {
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(60, 60, 60, 0.8);
+}
+
+.darkmode--activated .doc-mode-toggle,
+.darkmode--activated .doc-size-select,
+.darkmode--activated .doc-zoom-select,
+.darkmode--activated .doc-page-indicator {
+  background: #2a2a2a;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.darkmode--activated .doc-mode-toggle:hover {
+  background: #333333;
+  border-color: #505050;
+}
+
+.darkmode--activated .doc-size-select:hover,
+.darkmode--activated .doc-zoom-select:hover {
+  background: #333333;
+  border-color: #505050;
+}
+
+.darkmode--activated .doc-size-select:focus,
+.darkmode--activated .doc-zoom-select:focus {
+  border-color: #6b93e5;
+  box-shadow: 0 0 0 2px rgba(107, 147, 229, 0.2);
+}
+
+.darkmode--activated .doc-page {
+  background: #1a1a1a;
+  border-color: #333333;
+}
+
+.darkmode--activated .doc-page-content {
+  color: #e0e0e0;
+}
+
+.darkmode--activated .doc-page-footer {
+  color: #999999;
+}
+
+.darkmode--activated .doc-mode-size-selector::after {
+  color: #999999;
+}
