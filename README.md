@@ -1,3 +1,2 @@
 # blog-hexo
-
-何柚可 hayoko 的博客的仓库，<https://blog.hayoko.cn> 基于此构建。
+-何柚可hayoko的博客的仓库，blog.hayoko.cn基于此构建。
