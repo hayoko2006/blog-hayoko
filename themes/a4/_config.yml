@@ -44,7 +44,7 @@ beian:
   icp: "京ICP备xxxxxxxx号" # 备案号
   url: "https://beian.miit.gov.cn/" # 备案查询链接
   gongan: # 公安备案信息
-    enable: false # 是否启用公安备案
+    enable: true # 是否启用公安备案
     code: "京公网安备xxxxxxxx号" # 公安备案号
     url: "https://beian.miit.gov.cn/" # 公安备案查询链接
 
