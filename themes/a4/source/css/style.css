@@ -340,7 +340,8 @@ a
 .footer-beian
 {
     padding-bottom: 24px;
-    padding-top: 5px;
+    padding-top: 8px;
+    margin-top: -16px;
     font-size: 10px;
     color: var(--font-color-3);
     display: flex;
