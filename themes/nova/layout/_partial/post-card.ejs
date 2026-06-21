@@ -1,0 +1,58 @@
+<article class="post-card" data-aos="fade-up">
+  <% if (post.cover || post.photos && post.photos.length) { %>
+    <div class="post-card-image">
+      <a href="<%= url_for(post.path) %>">
+        <img src="<%= post.cover || post.photos[0] %>" alt="<%= post.title %>" loading="lazy">
+        <div class="post-card-image-overlay"></div>
+      </a>
+    </div>
+  <% } %>
+
+  <div class="post-card-content">
+    <div class="post-card-meta">
+      <% if (post.categories && post.categories.length) { %>
+        <span class="post-card-category">
+          <a href="<%= url_for(post.categories.data[0].path) %>">
+            <i class="fas fa-folder"></i>
+            <%= post.categories.data[0].name %>
+          </a>
+        </span>
+      <% } %>
+      <time class="post-card-date" datetime="<%= date_xml(post.date) %>">
+        <i class="far fa-calendar-alt"></i>
+        <%= date(post.date, 'YYYY-MM-DD') %>
+      </time>
+    </div>
+
+    <h2 class="post-card-title">
+      <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+    </h2>
+
+    <% if (post.excerpt) { %>
+      <div class="post-card-excerpt">
+        <%- truncate(strip_html(post.excerpt), { length: 150 }) %>
+      </div>
+    <% } else if (post.content) { %>
+      <div class="post-card-excerpt">
+        <%- truncate(strip_html(post.content), { length: 150 }) %>
+      </div>
+    <% } %>
+
+    <div class="post-card-footer">
+      <div class="post-card-tags">
+        <% if (post.tags && post.tags.length) { %>
+          <% post.tags.limit(3).forEach(tag => { %>
+            <a href="<%= url_for(tag.path) %>" class="post-tag">
+              <i class="fas fa-tag"></i>
+              <%= tag.name %>
+            </a>
+          <% }) %>
+        <% } %>
+      </div>
+      <a href="<%= url_for(post.path) %>" class="post-card-readmore">
+        Read More
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</article>

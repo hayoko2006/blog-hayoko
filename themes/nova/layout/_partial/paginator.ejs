@@ -1,0 +1,55 @@
+<% if (page.total > 1) { %>
+<nav class="pagination" aria-label="Pagination">
+  <div class="pagination-inner">
+    <% if (page.prev) { %>
+      <a href="<%= url_for(page.prev_link) %>" class="pagination-prev">
+        <i class="fas fa-chevron-left"></i>
+        <span>Previous</span>
+      </a>
+    <% } else { %>
+      <span class="pagination-prev disabled">
+        <i class="fas fa-chevron-left"></i>
+        <span>Previous</span>
+      </span>
+    <% } %>
+
+    <div class="pagination-numbers">
+      <% if (page.current > 2) { %>
+        <a href="<%= url_for('/') %>" class="pagination-number">1</a>
+        <% if (page.current > 3) { %>
+          <span class="pagination-ellipsis">...</span>
+        <% } %>
+      <% } %>
+
+      <% if (page.current > 1) { %>
+        <a href="<%= url_for(page.prev_link) %>" class="pagination-number"><%= page.current - 1 %></a>
+      <% } %>
+
+      <span class="pagination-number current"><%= page.current %></span>
+
+      <% if (page.current < page.total) { %>
+        <a href="<%= url_for(page.next_link) %>" class="pagination-number"><%= page.current + 1 %></a>
+      <% } %>
+
+      <% if (page.current < page.total - 1) { %>
+        <% if (page.current < page.total - 2) { %>
+          <span class="pagination-ellipsis">...</span>
+        <% } %>
+        <a href="<%= url_for(page.total === 2 ? '/page/2/' : '/page/' + page.total + '/') %>" class="pagination-number"><%= page.total %></a>
+      <% } %>
+    </div>
+
+    <% if (page.next) { %>
+      <a href="<%= url_for(page.next_link) %>" class="pagination-next">
+        <span>Next</span>
+        <i class="fas fa-chevron-right"></i>
+      </a>
+    <% } else { %>
+      <span class="pagination-next disabled">
+        <span>Next</span>
+        <i class="fas fa-chevron-right"></i>
+      </span>
+    <% } %>
+  </div>
+</nav>
+<% } %>

@@ -1,0 +1,54 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<% if (page.title) { %>
+  <title><%= page.title %> | <%= config.title %></title>
+<% } else { %>
+  <title><%= config.title %><% if (config.subtitle) { %> - <%= config.subtitle %><% } %></title>
+<% } %>
+
+<meta name="description" content="<%= page.description || page.excerpt || page.content || config.description %>">
+<meta name="author" content="<%= config.author %>">
+<meta name="keywords" content="<%= page.keywords || config.keywords %>">
+
+<!-- Open Graph -->
+<meta property="og:type" content="<%= page.layout || 'website' %>">
+<meta property="og:title" content="<%= page.title || config.title %>">
+<meta property="og:url" content="<%= url %>">
+<meta property="og:site_name" content="<%= config.title %>">
+<meta property="og:description" content="<%= page.description || page.excerpt || page.content || config.description %>">
+<meta property="og:locale" content="<%= config.language %>">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="<%= page.title || config.title %>">
+<meta name="twitter:description" content="<%= page.description || page.excerpt || page.content || config.description %>">
+
+<!-- Favicon -->
+<link rel="icon" href="<%= url_for(theme.favicon || '/images/favicon.ico') %>">
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+<!-- Theme CSS -->
+<%- css('css/nova') %>
+
+<!-- Theme Config -->
+<script>
+  window.NovaConfig = {
+    scheme: '<%= theme.scheme || "auto" %>',
+    primaryColor: '<%= theme.primary_color || "#6366f1" %>',
+    backgroundAnimation: <%= theme.background_animation !== false %>,
+    search: {
+      enable: <%= theme.search && theme.search.enable !== false %>
+    }
+  };
+</script>

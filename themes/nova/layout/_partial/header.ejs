@@ -1,0 +1,72 @@
+<header class="nova-header" id="header">
+  <div class="header-container">
+    <div class="header-brand">
+      <a href="<%= url_for('/') %>" class="brand-link">
+        <span class="brand-icon"><i class="fas fa-star"></i></span>
+        <span class="brand-text"><%= config.title %></span>
+      </a>
+    </div>
+
+    <nav class="header-nav" id="header-nav">
+      <% for (const [label, path] of Object.entries(theme.nav || {})) { %>
+        <a href="<%= url_for(path) %>" class="nav-link <%= is_current(path) ? 'active' : '' %>">
+          <%= label %>
+        </a>
+      <% } %>
+    </nav>
+
+    <div class="header-actions">
+      <% if (theme.search && theme.search.enable !== false) { %>
+        <button class="action-btn search-btn" id="search-btn" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
+      <% } %>
+
+      <button class="action-btn theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-sun light-icon"></i>
+        <i class="fas fa-moon dark-icon"></i>
+      </button>
+
+      <button class="action-btn menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-panel">
+    <div class="mobile-menu-header">
+      <span class="mobile-menu-title">Menu</span>
+      <button class="mobile-menu-close" id="mobile-menu-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <nav class="mobile-nav">
+      <% for (const [label, path] of Object.entries(theme.nav || {})) { %>
+        <a href="<%= url_for(path) %>" class="mobile-nav-link <%= is_current(path) ? 'active' : '' %>">
+          <%= label %>
+        </a>
+      <% } %>
+    </nav>
+  </div>
+</div>
+
+<!-- Search Modal -->
+<% if (theme.search && theme.search.enable !== false) { %>
+<div class="search-modal" id="search-modal">
+  <div class="search-overlay" id="search-overlay"></div>
+  <div class="search-container">
+    <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" class="search-input" id="search-input" placeholder="<%= theme.search.placeholder || 'Search...' %>" autocomplete="off">
+      <button class="search-close" id="search-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+<% } %>

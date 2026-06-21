@@ -1,0 +1,51 @@
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title" data-text="<%= config.title %>">
+        <%= config.title %>
+      </h1>
+      <% if (config.subtitle) { %>
+        <p class="hero-subtitle"><%= config.subtitle %></p>
+      <% } %>
+      <div class="hero-actions">
+        <a href="<%= url_for('/archives') %>" class="hero-btn primary">
+          <span>Explore Posts</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <% if (theme.sidebar && theme.sidebar.social && theme.sidebar.social.github) { %>
+          <a href="<%= theme.sidebar.social.github %>" target="_blank" rel="noopener noreferrer" class="hero-btn secondary">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+          </a>
+        <% } %>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span class="scroll-text">Scroll Down</span>
+    </div>
+  </section>
+
+  <!-- Posts Section -->
+  <section class="posts-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-pen-nib"></i>
+          Latest Posts
+        </h2>
+      </div>
+
+      <div class="posts-grid">
+        <% page.posts.forEach(post => { %>
+          <%- partial('_partial/post-card', { post }) %>
+        <% }) %>
+      </div>
+
+      <%- partial('_partial/paginator') %>
+    </div>
+  </section>
+</div>

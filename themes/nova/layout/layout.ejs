@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'en' %>" data-scheme="<%= theme.scheme || 'auto' %>">
+<head>
+  <%- partial('_partial/head') %>
+</head>
+<body class="nova-body">
+  <!-- Background Animation Canvas -->
+  <canvas id="bg-canvas" class="bg-canvas"></canvas>
+
+  <div class="nova-wrapper">
+    <%- partial('_partial/header') %>
+
+    <main class="nova-main" id="main">
+      <%- body %>
+    </main>
+
+    <%- partial('_partial/footer') %>
+  </div>
+
+  <!-- Theme JavaScript -->
+  <%- js('js/nova') %>
+
+  <!-- Hexo Scripts -->
+  <%- partial('_partial/scripts') %>
+</body>
+</html>

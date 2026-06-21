@@ -1,0 +1,97 @@
+# ===========================================
+# Nova Theme Configuration
+# ===========================================
+
+# Theme Info
+name: nova
+version: 1.0.0
+author: hayoko
+description: 现代简约 Hexo 主题 - 丰富但简约
+
+# ===========================================
+# Appearance
+# ===========================================
+# Color scheme: light | dark | auto
+scheme: auto
+
+# Primary color - 温暖琥珀色
+primary_color: "#c25e00"
+
+# Background animation
+background_animation: true
+
+# ===========================================
+# Navigation
+# ===========================================
+nav:
+  首页: /
+  文章: /archives
+  标签: /tags
+  分类: /categories
+  关于: /about
+
+# ===========================================
+# Sidebar
+# ===========================================
+sidebar:
+  enable: true
+  position: right
+  avatar: /images/my-photo-1.png
+  author: 何柚可
+  description: 记录生活与技术
+  social:
+    github: "https://github.com/hayoko2006"
+    email: "hayoko@hayoko.cn"
+
+# ===========================================
+# Footer
+# ===========================================
+footer:
+  since: 2024
+  custom_text: ""
+  icp: "皖ICP备2026007288号-1"
+
+# ===========================================
+# Article
+# ===========================================
+article:
+  word_count: true
+  reading_time: true
+  copyright: true
+  share: false
+  nav: true
+
+# ===========================================
+# Comments
+# ===========================================
+comments:
+  enable: false
+  type: ""
+
+# ===========================================
+# Search
+# ===========================================
+search:
+  enable: true
+  placeholder: "搜索文章..."
+
+# ===========================================
+# Code Highlight
+# ===========================================
+highlight:
+  theme: github
+  line_number: true
+  copy_button: true
+
+# ===========================================
+# Lazy Load
+# ===========================================
+lazyload:
+  enable: true
+  placeholder: /images/loading.gif
+
+# ===========================================
+# CDN
+# ===========================================
+cdn:
+  enable: true

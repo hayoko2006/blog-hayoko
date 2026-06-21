@@ -1,0 +1,56 @@
+<div class="archive-page">
+  <header class="archive-header">
+    <h1 class="archive-title">
+      <% if (page.year) { %>
+        <i class="fas fa-calendar-alt"></i>
+        <%= page.year %><% if (page.month) { %>-<%= page.month < 10 ? '0' + page.month : page.month %><% } %>
+      <% } else if (page.category) { %>
+        <i class="fas fa-folder"></i>
+        <%= page.category %>
+      <% } else if (page.tag) { %>
+        <i class="fas fa-tag"></i>
+        <%= page.tag %>
+      <% } else { %>
+        <i class="fas fa-archive"></i>
+        Archives
+      <% } %>
+    </h1>
+    <p class="archive-count">
+      <%= page.posts.length %> post<%= page.posts.length > 1 ? 's' : '' %>
+    </p>
+  </header>
+
+  <div class="archive-timeline">
+    <% let currentYear = null; %>
+    <% page.posts.forEach(post => { %>
+      <% const postYear = date(post.date, 'YYYY'); %>
+      <% if (postYear !== currentYear) { %>
+        <% currentYear = postYear; %>
+        <div class="timeline-year">
+          <span class="year-badge"><%= postYear %></span>
+        </div>
+      <% } %>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <time class="timeline-date" datetime="<%= date_xml(post.date) %>">
+            <%= date(post.date, 'MM-DD') %>
+          </time>
+          <a href="<%= url_for(post.path) %>" class="timeline-title">
+            <%= post.title %>
+          </a>
+          <% if (post.categories && post.categories.length) { %>
+            <span class="timeline-category">
+              <a href="<%= url_for(post.categories.data[0].path) %>">
+                <%= post.categories.data[0].name %>
+              </a>
+            </span>
+          <% } %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+  <%- partial('_partial/paginator') %>
+</div>

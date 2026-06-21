@@ -1,0 +1,135 @@
+<article class="post-page">
+  <!-- Post Header -->
+  <header class="post-header">
+    <% if (page.cover || page.photos && page.photos.length) { %>
+      <div class="post-header-image">
+        <img src="<%= page.cover || page.photos[0] %>" alt="<%= page.title %>">
+        <div class="post-header-overlay"></div>
+      </div>
+    <% } %>
+    <div class="post-header-content">
+      <div class="post-meta">
+        <% if (page.categories && page.categories.length) { %>
+          <span class="post-category">
+            <a href="<%= url_for(page.categories.data[0].path) %>">
+              <i class="fas fa-folder"></i>
+              <%= page.categories.data[0].name %>
+            </a>
+          </span>
+        <% } %>
+        <time class="post-date" datetime="<%= date_xml(page.date) %>">
+          <i class="far fa-calendar-alt"></i>
+          <%= date(page.date, 'YYYY-MM-DD') %>
+        </time>
+        <% if (theme.article && theme.article.reading_time !== false) { %>
+          <span class="post-reading-time">
+            <i class="far fa-clock"></i>
+            <%= min2read(page.content) %> min read
+          </span>
+        <% } %>
+      </div>
+      <h1 class="post-title"><%= page.title %></h1>
+      <div class="post-tags">
+        <% if (page.tags && page.tags.length) { %>
+          <% page.tags.forEach(tag => { %>
+            <a href="<%= url_for(tag.path) %>" class="post-tag">
+              <i class="fas fa-tag"></i>
+              <%= tag.name %>
+            </a>
+          <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <div class="post-container">
+    <div class="post-main">
+      <div class="post-content" id="post-content">
+        <%- page.content %>
+      </div>
+
+      <!-- Post Footer -->
+      <div class="post-footer">
+        <% if (theme.article && theme.article.copyright !== false) { %>
+          <div class="post-copyright">
+            <div class="copyright-icon">
+              <i class="fas fa-copyright"></i>
+            </div>
+            <div class="copyright-content">
+              <p class="copyright-title"><%= page.title %></p>
+              <p class="copyright-link">
+                <a href="<%= url %>"><%= url %></a>
+              </p>
+              <p class="copyright-license">
+                本文由 <a href="<%= url_for('/') %>"><%= config.author %></a> 创作，采用
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> 许可协议。
+              </p>
+            </div>
+          </div>
+        <% } %>
+
+        <!-- Post Navigation -->
+        <% if (theme.article && theme.article.nav !== false) { %>
+          <nav class="post-nav">
+            <% if (page.prev) { %>
+              <a href="<%= url_for(page.prev.path) %>" class="post-nav-prev">
+                <span class="nav-label">
+                  <i class="fas fa-chevron-left"></i>
+                  Previous
+                </span>
+                <span class="nav-title"><%= page.prev.title %></span>
+              </a>
+            <% } else { %>
+              <span class="post-nav-prev disabled">
+                <span class="nav-label">
+                  <i class="fas fa-chevron-left"></i>
+                  Previous
+                </span>
+              </span>
+            <% } %>
+
+            <% if (page.next) { %>
+              <a href="<%= url_for(page.next.path) %>" class="post-nav-next">
+                <span class="nav-label">
+                  Next
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+                <span class="nav-title"><%= page.next.title %></span>
+              </a>
+            <% } else { %>
+              <span class="post-nav-next disabled">
+                <span class="nav-label">
+                  Next
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </span>
+            <% } %>
+          </nav>
+        <% } %>
+      </div>
+
+      <!-- Comments -->
+      <% if (theme.comments && theme.comments.enable) { %>
+        <div class="post-comments" id="comments">
+          <%- partial('_partial/comments') %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Table of Contents -->
+    <% if (toc(page.content)) { %>
+      <aside class="post-toc" id="post-toc">
+        <div class="toc-inner">
+          <h3 class="toc-title">
+            <i class="fas fa-list"></i>
+            Contents
+          </h3>
+          <div class="toc-content">
+            <%- toc(page.content, { list_number: false }) %>
+          </div>
+        </div>
+      </aside>
+    <% } %>
+  </div>
+</article>
