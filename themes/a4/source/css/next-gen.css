@@ -1,0 +1,647 @@
+/**
+ * Next-Gen Blog Styles
+ * 下一代博客创新功能样式
+ */
+
+/* ==================== CSS 变量 ==================== */
+:root {
+  --article-font-size: 16px;
+  --article-line-height: 1.8;
+  --ng-accent: #c25e00;
+  --ng-accent-light: #e8a87c;
+  --ng-bg: #faf9f6;
+  --ng-ink: #2c2c2c;
+  --ng-muted: #6b6b6b;
+  --ng-rule: #d4d4d4;
+  --ng-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --ng-shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+/* ==================== 1. 阅读进度条 ==================== */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(0,0,0,0.05);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-light));
+  width: 0%;
+  transition: width 0.1s ease-out;
+}
+
+.reading-percentage {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  background: var(--ng-accent);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ==================== 2. 沉浸式阅读模式 ==================== */
+.immersive-reader-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--ng-rule);
+  background: var(--ng-bg);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: var(--ng-shadow);
+}
+
+.immersive-reader-btn:hover {
+  transform: scale(1.1);
+  box-shadow: var(--ng-shadow-hover);
+}
+
+body.immersive-mode .paper-main,
+body.immersive-mode .post-main {
+  max-width: 680px !important;
+  margin: 0 auto;
+  padding: 40px 60px;
+  background: var(--ng-bg);
+  box-shadow: 0 0 60px rgba(0,0,0,0.1);
+}
+
+body.immersive-mode .header,
+body.immersive-mode .footer,
+body.immersive-mode .post-footer-pre-next,
+body.immersive-mode .post-meta,
+body.immersive-mode .smart-toc-container,
+body.immersive-mode .theme-settings-trigger,
+body.immersive-mode .progress-wrap,
+body.immersive-mode .return-to-last-progress-wrap {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+body.immersive-mode {
+  background: #e8e6e1 !important;
+}
+
+.reader-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: var(--ng-ink);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.reader-toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==================== 3. 智能目录 ==================== */
+.smart-toc-container {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.smart-toc-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--ng-rule);
+  background: var(--ng-bg);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+  box-shadow: var(--ng-shadow);
+}
+
+.smart-toc {
+  background: var(--ng-bg);
+  border: 1px solid var(--ng-rule);
+  border-radius: 8px;
+  padding: 12px 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  width: 220px;
+  box-shadow: var(--ng-shadow);
+  transition: all 0.3s ease;
+}
+
+.smart-toc.collapsed {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+}
+
+.smart-toc-header {
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0 16px 8px;
+  border-bottom: 1px solid var(--ng-rule);
+  margin-bottom: 8px;
+  color: var(--ng-muted);
+}
+
+.smart-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.smart-toc-item {
+  margin: 0;
+  padding: 0;
+}
+
+.smart-toc-item a {
+  display: block;
+  padding: 5px 16px;
+  font-size: 13px;
+  color: var(--ng-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.smart-toc-item.level-2 a { padding-left: 16px; }
+.smart-toc-item.level-3 a { padding-left: 28px; font-size: 12px; }
+.smart-toc-item.level-4 a { padding-left: 40px; font-size: 11px; }
+
+.smart-toc-item a:hover {
+  color: var(--ng-accent);
+  background: rgba(194, 94, 0, 0.05);
+}
+
+.smart-toc-item.active a {
+  color: var(--ng-accent);
+  border-left-color: var(--ng-accent);
+  background: rgba(194, 94, 0, 0.08);
+  font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+  .smart-toc-container { display: none; }
+}
+
+/* ==================== 4. 知识图谱 ==================== */
+.knowledge-graph-widget {
+  margin: 24px 0;
+  border: 1px solid var(--ng-rule);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ng-bg);
+}
+
+.kg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--ng-bg);
+  border-bottom: 1px solid var(--ng-rule);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ng-muted);
+}
+
+.kg-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--ng-muted);
+  padding: 4px;
+}
+
+.kg-content {
+  padding: 12px 16px;
+  transition: all 0.3s;
+}
+
+.kg-content.collapsed {
+  display: none;
+}
+
+.kg-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kg-node {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.kg-node:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--ng-shadow);
+}
+
+.kg-tag {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.kg-category {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.kg-article {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* ==================== 5. 主题设置面板 ==================== */
+.theme-settings-trigger {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--ng-rule);
+  background: var(--ng-bg);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: var(--ng-shadow);
+}
+
+.theme-settings-trigger:hover {
+  transform: rotate(30deg) scale(1.1);
+}
+
+.theme-settings-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 280px;
+  background: var(--ng-bg);
+  border: 1px solid var(--ng-rule);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 1001;
+  box-shadow: var(--ng-shadow-hover);
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.theme-settings-panel.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.ts-header {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ng-rule);
+}
+
+.ts-section {
+  margin-bottom: 16px;
+}
+
+.ts-label {
+  font-size: 12px;
+  color: var(--ng-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ts-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ts-options button {
+  flex: 1;
+  min-width: 50px;
+  padding: 6px 10px;
+  border: 1px solid var(--ng-rule);
+  background: transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ts-options button:hover {
+  border-color: var(--ng-accent);
+  color: var(--ng-accent);
+}
+
+.ts-options button.active {
+  background: var(--ng-accent);
+  color: white;
+  border-color: var(--ng-accent);
+}
+
+.ts-section input[type="range"] {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.font-size-value,
+.line-height-value {
+  color: var(--ng-accent);
+  font-weight: 600;
+}
+
+/* 字体主题 */
+body[data-font="serif"] .post-md,
+body[data-font="serif"] .paper-main {
+  font-family: "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
+}
+
+body[data-font="sans"] .post-md,
+body[data-font="sans"] .paper-main {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body[data-font="mono"] .post-md,
+body[data-font="mono"] .paper-main {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* 颜色主题 */
+body[data-theme="dark"] {
+  --ng-bg: #1a1a1a;
+  --ng-ink: #e0e0e0;
+  --ng-muted: #888;
+  --ng-rule: #333;
+}
+
+body[data-theme="dark"] .paper,
+body[data-theme="dark"] .paper-main {
+  background: #1e1e1e !important;
+  color: #e0e0e0 !important;
+}
+
+body[data-theme="sepia"] {
+  --ng-bg: #f4ecd8;
+  --ng-ink: #5b4636;
+}
+
+body[data-theme="sepia"] .paper,
+body[data-theme="sepia"] .paper-main {
+  background: #f4ecd8 !important;
+  color: #5b4636 !important;
+}
+
+body[data-theme="green"] {
+  --ng-bg: #e8f5e9;
+  --ng-ink: #1b5e20;
+}
+
+body[data-theme="green"] .paper,
+body[data-theme="green"] .paper-main {
+  background: #e8f5e9 !important;
+  color: #1b5e20 !important;
+}
+
+/* ==================== 6. 阅读分析器 ==================== */
+.reading-analyzer {
+  margin: 16px 0 24px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(194,94,0,0.05), rgba(194,94,0,0.02));
+  border-radius: 8px;
+  border: 1px solid rgba(194,94,0,0.15);
+}
+
+.ra-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ng-muted);
+  margin-bottom: 12px;
+}
+
+.ra-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ra-stat {
+  text-align: center;
+}
+
+.ra-value {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ng-accent);
+}
+
+.ra-value.easy { color: #2e7d32; }
+.ra-value.medium { color: #ef6c00; }
+.ra-value.hard { color: #c62828; }
+
+.ra-label {
+  font-size: 11px;
+  color: var(--ng-muted);
+}
+
+.ra-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ra-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--ng-rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ra-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-light));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.ra-bar-label {
+  font-size: 11px;
+  color: var(--ng-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .ra-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ==================== 7. 代码块增强 ==================== */
+.code-block-wrapper {
+  margin: 16px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--ng-rule);
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid var(--ng-rule);
+}
+
+.code-lang {
+  font-size: 12px;
+  color: var(--ng-muted);
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+}
+
+.code-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--ng-rule);
+  background: white;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--ng-muted);
+}
+
+.code-copy-btn:hover {
+  border-color: var(--ng-accent);
+  color: var(--ng-accent);
+}
+
+.code-copy-btn.copied {
+  background: #e8f5e9;
+  border-color: #2e7d32;
+  color: #2e7d32;
+}
+
+.code-block-wrapper pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* ==================== 8. 图片灯箱 ==================== */
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-lightbox.show {
+  opacity: 1;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+}
+
+.lightbox-img {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 4px;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.image-lightbox.show .lightbox-img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s;
+}
+
+.lightbox-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ==================== 文章字体大小和行高变量应用 ==================== */
+.post-md {
+  font-size: var(--article-font-size);
+  line-height: var(--article-line-height);
+}
+
+.post-md p {
+  margin-bottom: calc(var(--article-font-size) * var(--article-line-height) * 0.6);
+}

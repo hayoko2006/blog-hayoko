@@ -199,4 +199,18 @@ inject:
   #css: css/custom.css # 找到该文件后，编写你的css样式，每个页面都会自动引入
   css: css/custom.css # 找到该文件后，编写你的css样式，每个页面都会自动引入
 
-version: v2.0.1
+# ---------------------------------------------------------------------------------------
+# Next-Gen 下一代博客创新功能
+# ---------------------------------------------------------------------------------------
+nextGen:
+  enable: true # 总开关
+  readingProgress: true # 顶部阅读进度条
+  immersiveReader: true # 沉浸式阅读模式
+  smartToc: true # 智能浮动目录
+  knowledgeGraph: true # 文章知识关联图谱
+  themeSwitcher: true # 字体/主题/字号实时切换
+  readingAnalyzer: true # 阅读时间与难度分析
+  codeBlockEnhance: true # 代码块复制与语言标识
+  imageLightbox: true # 图片点击放大
+
+version: v2.1.0-nextgen
