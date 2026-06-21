@@ -7,6 +7,12 @@
     <%- partial('_partial/configcss/imageShow') %>
 
     <body>
+        <noscript>
+            <style>
+                .paper { opacity: 1 !important; }
+                .post-main { display: block !important; }
+            </style>
+        </noscript>
         <% if(theme.tool.darkMode) { %>
         <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.80/darkreader.min.js"></script>
         <script>

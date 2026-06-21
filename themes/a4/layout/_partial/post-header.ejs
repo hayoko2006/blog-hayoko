@@ -37,10 +37,11 @@
             <% } %>
         </style>
         <img 
-            alt="^-^" 
+            alt="<%= config.author || config.title %> 头像" 
             cache-control="max-age=86400" 
             class="header-img" 
             src="<%- url_for(theme.favicon) %>" 
+            loading="lazy"
         />
         <div class="header-content">
             <a class="logo" href="<%- url_for() %>"><%= config.title %></a> 

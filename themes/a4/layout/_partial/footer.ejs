@@ -74,15 +74,16 @@
         <%- js('https://npm.elemecdn.com/hexo-theme-a4@latest/source/js/highlightjs-line-numbers.js') %>
 
         <%- js('js/randomHeaderContent.js') %>
+        <!--jQuery 统一加载-->
+        <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
+
         <!--回到顶部按钮-->
         <% if(theme.tool.returnToTop) { %>
-            <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
             <%- js('https://npm.elemecdn.com/hexo-theme-a4@latest/source/js/returnToTop.js') %>
         <% } %>
     
         <!--目录-->
         <% if(theme.tool.leftToc) { %>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
             <%- js('https://npm.elemecdn.com/hexo-theme-a4@latest/source/js/toc.js') %>
@@ -92,15 +93,17 @@
         <%- js('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/js/highlightjs-line-numbers.js') %>
 
         <%- js('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/js/randomHeaderContent.js') %>
+
+        <!--jQuery 统一加载-->
+        <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
+
         <!--回到顶部按钮-->
         <% if(theme.tool.returnToTop) { %>
-            <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
             <%- js('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/js/returnToTop.js') %>
         <% } %>
     
         <!--目录-->
         <% if(theme.tool.leftToc) { %>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
             <%- js('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/js/toc.js') %>
@@ -110,15 +113,17 @@
         <%- js('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/js/highlightjs-line-numbers.js') %>
 
         <%- js('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/js/randomHeaderContent.js') %>
+
+        <!--jQuery 统一加载-->
+        <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
+
         <!--回到顶部按钮-->
         <% if(theme.tool.returnToTop) { %>
-            <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
             <%- js('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/js/returnToTop.js') %>
         <% } %>
         
         <!--目录-->
         <% if(theme.tool.leftToc) { %>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
             <%- js('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/js/toc.js') %>
@@ -128,25 +133,28 @@
         <%- js('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/js/highlightjs-line-numbers.js') %>
 
         <%- js('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/js/randomHeaderContent.js') %>
+
+        <!--jQuery 统一加载-->
+        <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
+
         <!--回到顶部按钮-->
         <% if(theme.tool.returnToTop) { %>
-            <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
             <%- js('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/js/returnToTop.js') %>
         <% } %>
     
         <!--目录-->
         <% if(theme.tool.leftToc) { %>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
             <%- js('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/js/toc.js') %>
         <% } %>
     <% } %>
 <% } else { %>
+    <!--jQuery 统一加载-->
     <%- js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js') %>
+
     <!--目录-->
     <% if(theme.tool.leftToc) { %>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
         <%- js('js/toc.js') %>
@@ -158,7 +166,7 @@
         <%- js('js/returnToTop.js') %>
     <% } %>
 
-    <% if(theme.tool.returnToTop) { %>
+    <% if(theme.tool.returnToLast) { %>
         <%- js('js/returnToLastPage.js') %>
     <% } %>
 

@@ -1,10 +1,28 @@
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="<%= page.title %>" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="<%= page.description || page.title || config.description %>" />
+    <meta name="keywords" content="<%= page.keywords || config.keywords %>" />
+    <link rel="canonical" href="<%= url %>" />
     <meta name="hexo-theme-A4" content="<%= theme.version %>" />
     <link rel="alternate icon" type="image/webp" href="<%- url_for(theme.favicon) %>">
     <title><%= (theme.displayTitleInTab && page.title ? page.title + ' | ' : '') + config.title + (config.subtitle ? ' | ' + config.subtitle : '') %></title>
+
+    <!-- DNS 预解析和资源预连接 -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>" />
+    <meta property="og:title" content="<%= page.title || config.title %>" />
+    <meta property="og:description" content="<%= page.description || page.title || config.description %>" />
+    <meta property="og:url" content="<%= url %>" />
+    <meta property="og:site_name" content="<%= config.title %>" />
+    <% if(page.ogImage || theme.ogImage) { %>
+    <meta property="og:image" content="<%= url_for(page.ogImage || theme.ogImage) %>" />
+    <% } %>
 
     <% if(theme.cdn.enable && theme.cdn.choose != "") { %>
         <% if(theme.cdn.choose == "aliyun") { %>
