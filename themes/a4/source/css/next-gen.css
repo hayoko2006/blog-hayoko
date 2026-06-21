@@ -1,6 +1,6 @@
 /**
- * Next-Gen Blog Styles
- * 下一代博客创新功能样式
+ * Next-Gen Blog Styles v2
+ * 下一代博客创新功能样式 - 增强视觉与布局优化
  */
 
 /* ==================== CSS 变量 ==================== */
@@ -9,12 +9,15 @@
   --article-line-height: 1.8;
   --ng-accent: #c25e00;
   --ng-accent-light: #e8a87c;
+  --ng-accent-soft: rgba(194, 94, 0, 0.08);
   --ng-bg: #faf9f6;
   --ng-ink: #2c2c2c;
   --ng-muted: #6b6b6b;
   --ng-rule: #d4d4d4;
   --ng-shadow: 0 2px 12px rgba(0,0,0,0.08);
   --ng-shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+  --ng-radius: 12px;
+  --ng-radius-sm: 8px;
 }
 
 /* ==================== 1. 阅读进度条 ==================== */
@@ -42,45 +45,55 @@
   right: 12px;
   background: var(--ng-accent);
   color: white;
-  padding: 2px 8px;
-  border-radius: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
   z-index: 9999;
   opacity: 0;
   transition: opacity 0.3s;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  box-shadow: var(--ng-shadow);
 }
 
 /* ==================== 2. 沉浸式阅读模式 ==================== */
 .immersive-reader-btn {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
+  bottom: 160px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 1px solid var(--ng-rule);
-  background: var(--ng-bg);
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
   z-index: 1000;
-  transition: all 0.3s ease;
-  box-shadow: var(--ng-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .immersive-reader-btn:hover {
-  transform: scale(1.1);
-  box-shadow: var(--ng-shadow-hover);
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+}
+
+.immersive-reader-btn:active {
+  transform: scale(0.95);
 }
 
 body.immersive-mode .paper-main,
 body.immersive-mode .post-main {
-  max-width: 680px !important;
+  max-width: 720px !important;
   margin: 0 auto;
-  padding: 40px 60px;
+  padding: 50px 70px;
   background: var(--ng-bg);
-  box-shadow: 0 0 60px rgba(0,0,0,0.1);
+  box-shadow: 0 0 80px rgba(0,0,0,0.08);
+  border-radius: var(--ng-radius);
 }
 
 body.immersive-mode .header,
@@ -88,7 +101,7 @@ body.immersive-mode .footer,
 body.immersive-mode .post-footer-pre-next,
 body.immersive-mode .post-meta,
 body.immersive-mode .smart-toc-container,
-body.immersive-mode .theme-settings-trigger,
+body.immersive-mode .floating-toolbar,
 body.immersive-mode .progress-wrap,
 body.immersive-mode .return-to-last-progress-wrap {
   opacity: 0;
@@ -107,13 +120,14 @@ body.immersive-mode {
   transform: translate(-50%, -50%) scale(0.9);
   background: var(--ng-ink);
   color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 14px 28px;
+  border-radius: var(--ng-radius-sm);
   font-size: 14px;
   z-index: 10000;
   opacity: 0;
   transition: all 0.3s ease;
   pointer-events: none;
+  box-shadow: var(--ng-shadow-hover);
 }
 
 .reader-toast.show {
@@ -121,21 +135,118 @@ body.immersive-mode {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* ==================== 3. 智能目录 ==================== */
+/* ==================== 3. 浮动工具栏（整合所有按钮）==================== */
+.floating-toolbar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.ft-main-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--ng-accent) 0%, var(--ng-accent-light) 100%);
+  color: white;
+  cursor: pointer;
+  font-size: 22px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(194, 94, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ft-main-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(194, 94, 0, 0.45);
+}
+
+.ft-main-btn.active {
+  transform: rotate(45deg);
+}
+
+.ft-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ft-menu.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.ft-item {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--ng-rule);
+  background: var(--ng-bg);
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  box-shadow: var(--ng-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ft-item:hover {
+  transform: scale(1.15);
+  box-shadow: var(--ng-shadow-hover);
+  border-color: var(--ng-accent);
+}
+
+.ft-item::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 55px;
+  background: var(--ng-ink);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.ft-item:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==================== 4. 智能目录 ==================== */
 .smart-toc-container {
   position: fixed;
-  right: 20px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 999;
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
 }
 
 .smart-toc-toggle {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid var(--ng-rule);
   background: var(--ng-bg);
@@ -143,16 +254,24 @@ body.immersive-mode {
   font-size: 16px;
   transition: all 0.3s;
   box-shadow: var(--ng-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.smart-toc-toggle:hover {
+  border-color: var(--ng-accent);
+  color: var(--ng-accent);
 }
 
 .smart-toc {
   background: var(--ng-bg);
   border: 1px solid var(--ng-rule);
-  border-radius: 8px;
-  padding: 12px 0;
+  border-radius: var(--ng-radius-sm);
+  padding: 14px 0;
   max-height: 60vh;
   overflow-y: auto;
-  width: 220px;
+  width: 240px;
   box-shadow: var(--ng-shadow);
   transition: all 0.3s ease;
 }
@@ -166,10 +285,18 @@ body.immersive-mode {
 .smart-toc-header {
   font-weight: 600;
   font-size: 13px;
-  padding: 0 16px 8px;
+  padding: 0 18px 10px;
   border-bottom: 1px solid var(--ng-rule);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: var(--ng-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.smart-toc-header::before {
+  content: '📑';
+  font-size: 14px;
 }
 
 .smart-toc-list {
@@ -185,30 +312,30 @@ body.immersive-mode {
 
 .smart-toc-item a {
   display: block;
-  padding: 5px 16px;
+  padding: 6px 18px;
   font-size: 13px;
   color: var(--ng-muted);
   text-decoration: none;
-  border-left: 2px solid transparent;
+  border-left: 3px solid transparent;
   transition: all 0.2s;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.smart-toc-item.level-2 a { padding-left: 16px; }
-.smart-toc-item.level-3 a { padding-left: 28px; font-size: 12px; }
-.smart-toc-item.level-4 a { padding-left: 40px; font-size: 11px; }
+.smart-toc-item.level-2 a { padding-left: 18px; }
+.smart-toc-item.level-3 a { padding-left: 32px; font-size: 12px; }
+.smart-toc-item.level-4 a { padding-left: 46px; font-size: 11px; }
 
 .smart-toc-item a:hover {
   color: var(--ng-accent);
-  background: rgba(194, 94, 0, 0.05);
+  background: var(--ng-accent-soft);
 }
 
 .smart-toc-item.active a {
   color: var(--ng-accent);
   border-left-color: var(--ng-accent);
-  background: rgba(194, 94, 0, 0.08);
+  background: var(--ng-accent-soft);
   font-weight: 500;
 }
 
@@ -216,25 +343,31 @@ body.immersive-mode {
   .smart-toc-container { display: none; }
 }
 
-/* ==================== 4. 知识图谱 ==================== */
+/* ==================== 5. 知识图谱 ==================== */
 .knowledge-graph-widget {
-  margin: 24px 0;
+  margin: 28px 0;
   border: 1px solid var(--ng-rule);
-  border-radius: 8px;
+  border-radius: var(--ng-radius-sm);
   overflow: hidden;
   background: var(--ng-bg);
+  box-shadow: var(--ng-shadow);
 }
 
 .kg-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  background: var(--ng-bg);
+  padding: 12px 18px;
+  background: linear-gradient(135deg, var(--ng-accent-soft), transparent);
   border-bottom: 1px solid var(--ng-rule);
   font-size: 14px;
   font-weight: 600;
-  color: var(--ng-muted);
+  color: var(--ng-accent);
+}
+
+.kg-header::before {
+  content: '🔗';
+  margin-right: 6px;
 }
 
 .kg-toggle {
@@ -244,10 +377,15 @@ body.immersive-mode {
   font-size: 12px;
   color: var(--ng-muted);
   padding: 4px;
+  transition: transform 0.2s;
+}
+
+.kg-toggle:hover {
+  transform: scale(1.2);
 }
 
 .kg-content {
-  padding: 12px 16px;
+  padding: 14px 18px;
   transition: all 0.3s;
 }
 
@@ -262,70 +400,63 @@ body.immersive-mode {
 }
 
 .kg-node {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 14px;
+  border-radius: 20px;
   font-size: 13px;
   text-decoration: none;
   transition: all 0.2s;
+  border: 1px solid transparent;
 }
 
 .kg-node:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   box-shadow: var(--ng-shadow);
+}
+
+.kg-node::before {
+  font-size: 12px;
 }
 
 .kg-tag {
   background: #e3f2fd;
   color: #1565c0;
+  border-color: #bbdefb;
 }
+.kg-tag::before { content: '🏷️'; }
 
 .kg-category {
   background: #f3e5f5;
   color: #6a1b9a;
+  border-color: #e1bee7;
 }
+.kg-category::before { content: '📂'; }
 
 .kg-article {
   background: #e8f5e9;
   color: #2e7d32;
+  border-color: #c8e6c9;
 }
+.kg-article::before { content: '📄'; }
 
-/* ==================== 5. 主题设置面板 ==================== */
-.theme-settings-trigger {
-  position: fixed;
-  bottom: 40px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--ng-rule);
-  background: var(--ng-bg);
-  cursor: pointer;
-  font-size: 18px;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  box-shadow: var(--ng-shadow);
-}
-
-.theme-settings-trigger:hover {
-  transform: rotate(30deg) scale(1.1);
-}
-
+/* ==================== 6. 主题设置面板 ==================== */
 .theme-settings-panel {
   position: fixed;
   bottom: 100px;
-  right: 20px;
-  width: 280px;
+  right: 24px;
+  width: 300px;
   background: var(--ng-bg);
   border: 1px solid var(--ng-rule);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: var(--ng-radius);
+  padding: 24px;
   z-index: 1001;
-  box-shadow: var(--ng-shadow-hover);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
   opacity: 0;
-  transform: translateY(10px) scale(0.95);
+  transform: translateY(20px) scale(0.9);
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-settings-panel.show {
@@ -335,46 +466,57 @@ body.immersive-mode {
 }
 
 .ts-header {
-  font-weight: 600;
-  font-size: 15px;
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--ng-rule);
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--ng-accent);
+  color: var(--ng-accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ts-header::before {
+  content: '🎨';
 }
 
 .ts-section {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .ts-label {
   font-size: 12px;
   color: var(--ng-muted);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
 }
 
 .ts-options {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .ts-options button {
   flex: 1;
-  min-width: 50px;
-  padding: 6px 10px;
-  border: 1px solid var(--ng-rule);
+  min-width: 60px;
+  padding: 8px 12px;
+  border: 2px solid var(--ng-rule);
   background: transparent;
-  border-radius: 6px;
+  border-radius: var(--ng-radius-sm);
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: 500;
 }
 
 .ts-options button:hover {
   border-color: var(--ng-accent);
   color: var(--ng-accent);
+  background: var(--ng-accent-soft);
 }
 
 .ts-options button.active {
@@ -385,13 +527,28 @@ body.immersive-mode {
 
 .ts-section input[type="range"] {
   width: 100%;
-  margin-top: 4px;
+  margin-top: 6px;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--ng-rule);
+  outline: none;
+}
+
+.ts-section input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ng-accent);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(194, 94, 0, 0.3);
 }
 
 .font-size-value,
 .line-height-value {
   color: var(--ng-accent);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* 字体主题 */
@@ -446,38 +603,50 @@ body[data-theme="green"] .paper-main {
   color: #1b5e20 !important;
 }
 
-/* ==================== 6. 阅读分析器 ==================== */
+/* ==================== 7. 阅读分析器 ==================== */
 .reading-analyzer {
-  margin: 16px 0 24px;
-  padding: 16px;
-  background: linear-gradient(135deg, rgba(194,94,0,0.05), rgba(194,94,0,0.02));
-  border-radius: 8px;
-  border: 1px solid rgba(194,94,0,0.15);
+  margin: 20px 0 28px;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--ng-accent-soft), rgba(194, 94, 0, 0.02));
+  border-radius: var(--ng-radius-sm);
+  border: 1px solid rgba(194, 94, 0, 0.15);
+  box-shadow: var(--ng-shadow);
 }
 
 .ra-header {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ng-muted);
-  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ng-accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ra-header::before {
+  content: '📊';
 }
 
 .ra-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 14px;
+  margin-bottom: 16px;
 }
 
 .ra-stat {
   text-align: center;
+  padding: 10px;
+  background: rgba(255,255,255,0.5);
+  border-radius: var(--ng-radius-sm);
 }
 
 .ra-value {
   display: block;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--ng-accent);
+  line-height: 1.2;
 }
 
 .ra-value.easy { color: #2e7d32; }
@@ -487,53 +656,56 @@ body[data-theme="green"] .paper-main {
 .ra-label {
   font-size: 11px;
   color: var(--ng-muted);
+  margin-top: 4px;
 }
 
 .ra-detail {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ra-bar {
   flex: 1;
-  height: 6px;
+  height: 8px;
   background: var(--ng-rule);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .ra-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-light));
-  border-radius: 3px;
-  transition: width 0.5s ease;
+  border-radius: 4px;
+  transition: width 0.8s ease;
 }
 
 .ra-bar-label {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ng-muted);
   white-space: nowrap;
+  font-weight: 500;
 }
 
 @media (max-width: 600px) {
   .ra-stats { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ==================== 7. 代码块增强 ==================== */
+/* ==================== 8. 代码块增强 ==================== */
 .code-block-wrapper {
-  margin: 16px 0;
-  border-radius: 8px;
+  margin: 20px 0;
+  border-radius: var(--ng-radius-sm);
   overflow: hidden;
   border: 1px solid var(--ng-rule);
+  box-shadow: var(--ng-shadow);
 }
 
 .code-block-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
-  background: #f5f5f5;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #f5f5f5, #fafafa);
   border-bottom: 1px solid var(--ng-rule);
 }
 
@@ -542,25 +714,37 @@ body[data-theme="green"] .paper-main {
   color: var(--ng-muted);
   font-family: "JetBrains Mono", monospace;
   text-transform: uppercase;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.code-lang::before {
+  content: '◆';
+  color: var(--ng-accent);
+  font-size: 10px;
 }
 
 .code-copy-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: 6px;
+  padding: 6px 14px;
   border: 1px solid var(--ng-rule);
   background: white;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s;
   color: var(--ng-muted);
+  font-weight: 500;
 }
 
 .code-copy-btn:hover {
   border-color: var(--ng-accent);
   color: var(--ng-accent);
+  background: var(--ng-accent-soft);
 }
 
 .code-copy-btn.copied {
@@ -574,7 +758,7 @@ body[data-theme="green"] .paper-main {
   border-radius: 0 !important;
 }
 
-/* ==================== 8. 图片灯箱 ==================== */
+/* ==================== 9. 图片灯箱 ==================== */
 .image-lightbox {
   position: fixed;
   top: 0;
@@ -599,7 +783,8 @@ body[data-theme="green"] .paper-main {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(10px);
 }
 
 .lightbox-img {
@@ -607,9 +792,10 @@ body[data-theme="green"] .paper-main {
   max-width: 90%;
   max-height: 90%;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: var(--ng-radius-sm);
   transform: scale(0.9);
   transition: transform 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
 .image-lightbox.show .lightbox-img {
@@ -618,25 +804,29 @@ body[data-theme="green"] .paper-main {
 
 .lightbox-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid rgba(255,255,255,0.2);
   background: rgba(255,255,255,0.1);
   color: white;
   font-size: 20px;
   cursor: pointer;
   z-index: 1;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox-close:hover {
   background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
 }
 
-/* ==================== 文章字体大小和行高变量应用 ==================== */
+/* ==================== 10. 文章装饰元素 ==================== */
 .post-md {
   font-size: var(--article-font-size);
   line-height: var(--article-line-height);
@@ -644,4 +834,259 @@ body[data-theme="green"] .paper-main {
 
 .post-md p {
   margin-bottom: calc(var(--article-font-size) * var(--article-line-height) * 0.6);
+}
+
+/* 引用块装饰 */
+.post-md blockquote {
+  border-left: 4px solid var(--ng-accent);
+  background: linear-gradient(135deg, var(--ng-accent-soft), transparent);
+  padding: 16px 20px;
+  margin: 20px 0;
+  border-radius: 0 var(--ng-radius-sm) var(--ng-radius-sm) 0;
+  font-style: italic;
+  position: relative;
+}
+
+.post-md blockquote::before {
+  content: '"';
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 48px;
+  color: var(--ng-accent-light);
+  opacity: 0.3;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* 分隔线装饰 */
+.post-md hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ng-accent-light), transparent);
+  margin: 32px 0;
+  position: relative;
+}
+
+.post-md hr::after {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--ng-bg);
+  padding: 0 12px;
+  color: var(--ng-accent);
+  font-size: 14px;
+}
+
+/* 表格装饰 */
+.post-md table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  border-radius: var(--ng-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--ng-shadow);
+}
+
+.post-md th {
+  background: linear-gradient(135deg, var(--ng-accent), var(--ng-accent-light));
+  color: white;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.post-md td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ng-rule);
+}
+
+.post-md tr:nth-child(even) {
+  background: var(--ng-accent-soft);
+}
+
+.post-md tr:hover {
+  background: rgba(194, 94, 0, 0.12);
+}
+
+/* 列表装饰 */
+.post-md ul li::marker {
+  color: var(--ng-accent);
+}
+
+.post-md ol li::marker {
+  color: var(--ng-accent);
+  font-weight: 600;
+}
+
+/* 链接装饰 */
+.post-md a {
+  color: var(--ng-accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--ng-accent-light);
+  transition: all 0.2s;
+}
+
+.post-md a:hover {
+  border-bottom-style: solid;
+  background: var(--ng-accent-soft);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* 标题装饰 */
+.post-md h2 {
+  position: relative;
+  padding-bottom: 8px;
+  margin-top: 36px;
+}
+
+.post-md h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-light));
+  border-radius: 2px;
+}
+
+.post-md h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.post-md h3::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--ng-accent);
+  border-radius: 50%;
+}
+
+/* ==================== 11. 文章推荐 ==================== */
+.article-recommend {
+  margin: 32px 0;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(194,94,0,0.03), rgba(194,94,0,0.08));
+  border-radius: var(--ng-radius);
+  border: 1px solid rgba(194,94,0,0.1);
+}
+
+.ar-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ng-accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--ng-bg);
+  border-radius: var(--ng-radius-sm);
+  text-decoration: none;
+  color: var(--ng-ink);
+  border: 1px solid var(--ng-rule);
+  transition: all 0.2s;
+}
+
+.ar-item:hover {
+  border-color: var(--ng-accent);
+  background: var(--ng-accent-soft);
+  transform: translateX(4px);
+}
+
+.ar-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ar-arrow {
+  color: var(--ng-accent);
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.ar-item:hover .ar-arrow {
+  transform: translateX(4px);
+}
+
+/* ==================== 12. 粒子背景 ==================== */
+.particle-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==================== 13. 打字机光标 ==================== */
+.post-main-title::after,
+.index-header h1::after {
+  content: '|';
+  animation: blink 1s infinite;
+  color: var(--ng-accent);
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==================== 14. 响应式优化 ==================== */
+@media (max-width: 768px) {
+  .floating-toolbar {
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  .ft-main-btn {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .theme-settings-panel {
+    width: calc(100vw - 32px);
+    right: 16px;
+    left: 16px;
+    bottom: 80px;
+  }
+  
+  .immersive-reader-btn {
+    bottom: 140px;
+    right: 16px;
+  }
+  
+  .smart-toc-container {
+    display: none;
+  }
+  
+  .reading-analyzer {
+    padding: 16px;
+  }
+  
+  .ra-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 }
