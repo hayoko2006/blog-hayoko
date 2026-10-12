@@ -27,7 +27,7 @@ index:  # 首页相关配置
   titlePosition: left # center | left  # 首页标题的位置
   width: middle  # small | middle | big # 首页的宽度
   list: true # 开启后会在首页展示文章列表
-  waterfall: false # 开启后首页以「类似朋友圈」的瀑布流卡片展示文章（优先于 list）
+  waterfall: true # 开启后首页以「类似朋友圈」的瀑布流卡片展示文章（优先于 list）
   pagination: false # 首页文章列表分页（需同时开启 list；每页篇数取站点根配置 per_page），开启后自动生成上一页/下一页导航
 
 footerLink: # 底部的链接自定义
@@ -73,7 +73,7 @@ isAvatarRotating: true # 圆形头像是否开启悬浮旋转
 # 开启后所有页面自动渲染 $...$ 行内公式与 $...$ 块级公式，无需额外安装插件
 # 如需在单篇文章关闭，在该文章 front-matter 中添加 mathjax: false
 mathjax:
-  enable: false # true | false
+  enable: true # true | false
 
 # 是否启用一些特色工具 false | true
 tool:
