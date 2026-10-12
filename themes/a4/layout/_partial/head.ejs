@@ -1,111 +1,66 @@
-<head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="<%= page.title %>" />
+    <%
+    // SEO：description 优先取页面自定义 description，其次文章摘要（去标签），最后站点描述；避免与标题重复
+    var seoDescription = page.description || (page.excerpt ? String(page.excerpt).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '') || config.description || '';
+    if (seoDescription.length > 150) { seoDescription = seoDescription.slice(0, 150) + '…'; }
+    var canonicalUrl = String(config.url || '').replace(/\/+$/, '') + '/' + (page.path === 'index.html' ? '' : page.path);
+    %>
+    <meta name="description" content="<%= seoDescription %>" />
+    <link rel="canonical" href="<%- canonicalUrl.replace(/index\.html$/, '') %>" />
+    <% if (is_post() || is_page()) { %>
+    <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>" />
+    <meta property="og:title" content="<%= page.title %>" />
+    <meta property="og:description" content="<%= seoDescription %>" />
+    <meta property="og:url" content="<%- canonicalUrl.replace(/index\.html$/, '') %>" />
+    <meta property="og:site_name" content="<%= config.title %>" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="<%= page.title %>" />
+    <meta name="twitter:description" content="<%= seoDescription %>" />
+    <% } %>
     <meta name="hexo-theme-A4" content="<%= theme.version %>" />
     <link rel="alternate icon" type="image/webp" href="<%- url_for(theme.favicon) %>">
     <title><%= (theme.displayTitleInTab && page.title ? page.title + ' | ' : '') + config.title + (config.subtitle ? ' | ' + config.subtitle : '') %></title>
 
     <% if(theme.cdn.enable && theme.cdn.choose != "") { %>
-        <% if(theme.cdn.choose == "aliyun") { %>
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/highlight/style1.css') %>
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/a11y-dark.min.css') %>
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/reset.css') %>
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/markdown.css') %>
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/fonts.css') %>
+        <% var cdnPath = "" %>
+        <% if(theme.cdn.choose == "aliyun") { cdnPath = "https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/" %>
+        <% } else if(theme.cdn.choose == "jsdelivr") { cdnPath = "https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/" %>
+        <% } else if(theme.cdn.choose == "zzko") { cdnPath = "https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/" %>
+        <% } else if(theme.cdn.choose == "unpkg") { cdnPath = "https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/" %>
+        <% } %>
+        <% if(cdnPath != "") { %>
+            <%- css(cdnPath + 'highlight/style1.css') %>
+            <%- css(cdnPath + 'a11y-dark.min.css') %>
+            <%- css(cdnPath + 'reset.css') %>
+            <%- css(cdnPath + 'markdown.css') %>
+            <%- css(cdnPath + 'fonts.css') %>
 
             <!--注意：首页既不是post也不是page-->
             <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
-                <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/waline.css') %>
+                <%- css(cdnPath + 'waline.css') %>
             <% } %>
 
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/ui.css') %>
-            <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/style.css') %>
-
-            <!--返回顶部css-->
-            <% if(theme.tool.returnToTop) { %>
-                <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/returnToTop.css') %>
-                <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/unicons.css') %>
-            <% } %>
-            <% if(theme.tool.leftToc) { %>
-                <!--目录-->
-                <%- css('https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/toc.css') %>
-            <% } %>
-        <% } else if(theme.cdn.choose == "jsdelivr") { %>
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/highlight/style1.css') %>
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/a11y-dark.min.css') %>
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/reset.css') %>
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/markdown.css') %>
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/fonts.css') %>
-            <!--注意：首页既不是post也不是page-->
-            <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
-                <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/waline.css') %>
-            <% } %>
-
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/ui.css') %>
-            <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/style.css') %>
+            <%- css(cdnPath + 'ui.css') %>
+            <%- css(cdnPath + 'style.css') %>
 
             <!--返回顶部css-->
             <% if(theme.tool.returnToTop) { %>
-                <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/returnToTop.css') %>
-                <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/unicons.css') %>
+                <%- css(cdnPath + 'returnToTop.css') %>
+                <%- css(cdnPath + 'unicons.css') %>
             <% } %>
             <% if(theme.tool.leftToc) { %>
                 <!--目录-->
-                <%- css('https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/toc.css') %>
+                <%- css(cdnPath + 'toc.css') %>
             <% } %>
-
-        <% } else if(theme.cdn.choose == "zzko") { %>
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/highlight/style1.css') %>
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/a11y-dark.min.css') %>
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/reset.css') %>
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/markdown.css') %>
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/fonts.css') %>
-            <!--注意：首页既不是post也不是page-->
-            <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
-                <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/waline.css') %>
+            <% if(theme.index.waterfall) { %>
+                <!--瀑布流-->
+                <%- css(cdnPath + 'waterfall.css') %>
             <% } %>
-
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/ui.css') %>
-            <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/style.css') %>
-
-            <!--返回顶部css-->
-            <% if(theme.tool.returnToTop) { %>
-                <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/returnToTop.css') %>
-                <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/unicons.css') %>
-            <% } %>
-            <% if(theme.tool.leftToc) { %>
-                <!--目录-->
-                <%- css('https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/toc.css') %>
-            <% } %>
-
-        <% }  else if(theme.cdn.choose == "unpkg") { %>
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/highlight/style1.css') %>
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/a11y-dark.min.css') %>
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/reset.css') %>
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/markdown.css') %>
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/fonts.css') %>
-            <!--注意：首页既不是post也不是page-->
-            <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
-                <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/waline.css') %>
-            <% } %>
-
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/ui.css') %>
-            <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/style.css') %>
-
-            <!--返回顶部css-->
-            <% if(theme.tool.returnToTop) { %>
-                <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/returnToTop.css') %>
-                <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/unicons.css') %>
-            <% } %>
-            <% if(theme.tool.leftToc) { %>
-                <!--目录-->
-                <%- css('https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/toc.css') %>
-            <% } %>
-
         <% } %>
     <% } else { %>
         <%- css('css/highlight/style1.css') %>
+        <%- css('css/a11y-dark.min.css') %>
         <%- css('css/reset.css') %>
         <%- css('css/markdown.css') %>
         <%- css('css/fonts.css') %>
@@ -126,6 +81,10 @@
             <!--目录-->
             <%- css('css/toc.css') %>
         <% } %>
+        <% if(theme.index.waterfall) { %>
+            <!--瀑布流-->
+            <%- css('css/waterfall.css') %>
+        <% } %>
     <% } %>
 
     <% if(theme.tool.returnToLast) { %>
@@ -133,6 +92,10 @@
     <% } %>
 
     <%- css('css/lightgallery-bundle.min.css') %>
+
+    <% if(theme.tool.copyCode) { %>
+        <%- css('css/copyCode.css') %>
+    <% } %>
 
     <% if(theme.inject.css) { %>
         <%- css(theme.inject.css) %>
@@ -150,5 +113,25 @@
     <% } %>
 
     <!-- <link rel="stylesheet" href="https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css" /> -->
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkai@3.0.0/dist/LXGWWenKai-Regular/result.css' /> 
-</head>
+    <% if(theme.font.webfont !== false) { %>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkai@3.0.0/dist/LXGWWenKai-Regular/result.css' />
+    <% } %>
+
+    <% if(theme.font.googleFontUrl) { %>
+        <!--自定义字体链接：支持填入 Google Fonts 或其他字体 CSS 的 URL，留空则不加载-->
+        <link rel="stylesheet" href="<%= theme.font.googleFontUrl %>" />
+    <% } %>
+
+    <% if(theme.mathjax.enable && (!('mathjax' in page) || page.mathjax == true)) { %>
+        <!--全局数学公式支持：MathJax 3，可在文章 front-matter 用 mathjax: false 单独关闭-->
+        <script>
+            MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                }
+            };
+        </script>
+        <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <% } %>

@@ -35,26 +35,26 @@
             <div class="post-head-meta-center">
         <% } %>
                 <% if(theme.postInfo.updateDate) { %>
-                    <span>最近更新：<%- date(page.updated, "YYYY-MM-DD") %></span> 
+                    <span><%= __('post_updated') %><%- date(page.updated, "YYYY-MM-DD") %></span> 
                 <% } %>
                 <% if(theme.postInfo.wordCount) { %>
                     <% if(theme.postInfo.updateDate) {  %>
                         &nbsp; | &nbsp;
                     <% } %>
-                     <span>字数总计：<%= wordcount(page.content) %></span>
+                     <span><%= __('post_wordcount') %><%= wordcount(page.content) %></span>
                 <% } %>
                 <% if(theme.postInfo.readTime) { %>
                     <% if(theme.postInfo.wordCount || theme.postInfo.updateDate) {  %>
                         &nbsp; | &nbsp;
                     <% } %>
-                    <span>阅读估时：<%= min2read(page.content) %>分钟</span>
+                    <span><%= __('post_readtime') %><%= min2read(page.content) %><%= __('post_readtime_unit') %></span>
                 <% } %>
                 <% if(theme.postInfo.viewCount) { %>
                     <% if(theme.postInfo.wordCount || theme.postInfo.updateDate|| theme.postInfo.readTime) {  %>
                         &nbsp; | &nbsp;
                     <% } %>
                     <span id="busuanzi_container_page_pv">
-                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                        <%= __('post_views') %><span id="busuanzi_value_page_pv"></span><%= __('post_views_unit') %>
                     </span>
                 <% } %>
             </div>
@@ -74,15 +74,49 @@
         <%- page.content %>
     </div>
 
+    <% if(is_post() && theme.post.wordExport) { %>
+        <div class="post-word-export">
+            <a id="export-word-btn" href="javascript:void(0)">导出 Word</a>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const btn = document.getElementById('export-word-btn');
+                if (!btn) return;
+                btn.addEventListener('click', () => {
+                    const article = document.querySelector('.post-md');
+                    if (!article) return;
+                    const titleEl = document.querySelector('.post-main-title');
+                    const title = titleEl ? titleEl.textContent.trim() : document.title;
+                    // 克隆正文并剔除目录、把图片转为绝对地址，便于 Word 打开
+                    const clone = article.cloneNode(true);
+                    clone.querySelectorAll('.post-toc').forEach(n => n.remove());
+                    clone.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+                    const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
+                        + '<head><meta charset="utf-8"><title>' + title + '</title>'
+                        + '<style>body{font-family:"Times New Roman","LXGW WenKai",serif;line-height:1.8;}img{max-width:100%;}</style>'
+                        + '</head><body><h1>' + title + '</h1>' + clone.innerHTML + '</body></html>';
+                    const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = title + '.doc';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                });
+            });
+        </script>
+    <% } %>
+
     <div class="post-meta">
         <i>
         <% if(is_post()) { %>
             <span><%- date(page.date, "YYYY-MM-DD") %></span>
             <% if(page.tags.data.length > 0 || page.categories.data.length > 0) { %>
-                <span>该篇文章被 <%= config.author %></span>
+                <span><%= __('post_author_prefix') %> <%= config.author %></span>
             <% } %>
             <% if(page.tags.data.length > 0) { %>
-                <span>打上标签:
+                <span><%= __('post_tags_label') %>
                     <% var postTags = page.tags.data; %>
                     <%   for(var j = 0; j < postTags.length; j++) { %>
                         <a href='<%- url_for(postTags[j].path)%>'>
@@ -92,7 +126,7 @@
                 </span>
              <% } %>
              <% if(page.categories.data.length > 0) { %>
-                <span>归为分类:
+                <span><%= __('post_categories_label') %>
                     <% var postCategories = page.categories.data; %>
                     <%   for(var j = 0; j < postCategories.length; j++) { %>
                         <a href='<%- url_for(postCategories[j].path)%>'>
@@ -138,3 +172,6 @@
 </div>
 
 
+<% if(theme.tool.mobileToc) { %>
+<script src="<%= url_for('/js/mobileToc.js') %>"></script>
+<% } %>

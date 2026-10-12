@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="<%= config.language || 'en' %>">
-    <%- partial('_partial/configcss/font') %>
-    <%- partial('_partial/head') %>
-    <%- partial('_partial/configcss/width') %>
-    <%- partial('_partial/configcss/color') %>
-    <%- partial('_partial/configcss/imageShow') %>
+    <head>
+        <%- partial('_partial/configcss/font') %>
+        <%- partial('_partial/head') %>
+        <%- partial('_partial/configcss/width') %>
+        <%- partial('_partial/configcss/color') %>
+        <%- partial('_partial/configcss/imageShow') %>
+        <%- partial('_partial/configcss/vertical') %>
+    </head>
 
     <body>
         <% if(theme.tool.darkMode) { %>
@@ -81,11 +84,13 @@
 
             <% var tags,tagsInside, categories, categoriesInside; %>
 
-            <% if(path == "index.html") { %>
+            <% if(path == "index.html" || (theme.index.pagination && /^page\/\d+\/index\.html$/.test(path))) { %>
                 <div class="shadow-drop-2-bottom index-main">
                     <%- partial('_partial/header') %>
                     <%- partial('index') %>
-                    <% if(theme.index.list) { %>
+                    <% if(theme.index.waterfall) { %>
+                        <%- partial('_partial/waterfall') %>
+                    <% } else if(theme.index.list) { %>
                         <%- partial('list') %>
                     <% } %>
                     <%- partial('_partial/footer') %>
@@ -154,6 +159,9 @@
 </html>
 <script src="<%= url_for('/js/emojiHandler.js') %>"></script>
 <script src="<%= url_for('/js/search.js') %>"></script>
+<% if(theme.tool.copyCode) { %>
+<script src="<%= url_for('/js/copyCode.js') %>"></script>
+<% } %>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         wrapEmojis('.paper');

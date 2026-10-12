@@ -1,7 +1,7 @@
 # 当你第一次玩A4，想直接看效果的话：
 # 1. 请直接去掉 menu 配置中的  ‘首页’ 和 ‘文章’ 前的 ‘#’ 注释符号
 # 2. 请直接去掉 showInMenu 配置中的 ‘- 文章’ 前的 ‘#’ 注释符号
-# 3. 执行命令：hexo new page index 生成首页；执行命令：hexo new page list 生成列表页面；
+# 3. 首页(index)与列表页(list)会在启动时自动创建，无需手动执行 hexo new page
 # 4. 执行命令：hexo clean && hexo g && hexo s 直接查看页面效果
 menu:
   首页: /  #需要hexo new page index,在index/index.md填写的内容将会展现在首页上
@@ -27,6 +27,8 @@ index:  # 首页相关配置
   titlePosition: left # center | left  # 首页标题的位置
   width: middle  # small | middle | big # 首页的宽度
   list: true # 开启后会在首页展示文章列表
+  waterfall: false # 开启后首页以「类似朋友圈」的瀑布流卡片展示文章（优先于 list）
+  pagination: false # 首页文章列表分页（需同时开启 list；每页篇数取站点根配置 per_page），开启后自动生成上一页/下一页导航
 
 footerLink: # 底部的链接自定义
   info: © 2006-现在 何欣雨   # info这个单词不能修改，不想使用可为空
@@ -57,6 +59,8 @@ post:
 # 文章页面的其他配置
   footer: 💗做一个清醒且高认知的现代人💗
   themeInfo: true # 是否开启底部右侧声明本站信息
+  lazyImage: true # 文章图片原生懒加载（渲染时为 <img> 添加 loading="lazy"）；设为 false 关闭
+  wordExport: false # 是否在文章页显示「导出 Word」按钮（将文章正文导出为 .doc 文档）
   width: middle  #  middle | big
   titlePosition: center # left ｜ center 文章标题的位置
 
@@ -65,6 +69,12 @@ favicon: /images/my-photo-1.png # 默认方形头像
 isRoundedAvatar: false # 是否圆形头像
 isAvatarRotating: true # 圆形头像是否开启悬浮旋转
 
+# 全局数学公式支持（MathJax 3）
+# 开启后所有页面自动渲染 $...$ 行内公式与 $...$ 块级公式，无需额外安装插件
+# 如需在单篇文章关闭，在该文章 front-matter 中添加 mathjax: false
+mathjax:
+  enable: false # true | false
+
 # 是否启用一些特色工具 false | true
 tool:
   darkMode: true # 暗黑模式
@@ -72,6 +82,10 @@ tool:
   returnToLast: true # 回退页面按钮
   topToc: true # 文章顶部目录
   leftToc: true # 文章左侧目录 目前仅支持大屏幕浮现
+  verticalWriting: false # 全局竖排（writing-mode: vertical-rl）；可在某篇文章 front-matter 用 vertical: true / false 单独开关
+  search: false # 站内搜索（开启后文章列表页显示搜索框；搜索数据由主题内置生成器输出的 /search.xml 提供，无需安装插件）
+  copyCode: true # 代码块一键复制按钮
+  mobileToc: true # 移动端抽屉式目录（小屏幕下按钮呼出文章目录）
   recentUpdatePost: true # list页面将会新增一个“最近更新”模块，展示最近3篇文章，最近更新可点击跳转至 "最近更新列表页面"
   # A4启动将会自动创建“最近更新页面”：url为 /recent-updates 请自行使用
   # 如果你发现你的最近更新时间总是当天部署的时间，请看 https://ninojay.top/2023/writeByGithub-2/#2024.09.26更新说明
@@ -105,6 +119,8 @@ postInfo:
 # 列表页面的配置
 listInfo:
   enable: false
+  hideCategory: false # 是否隐藏文章标题前的分类（列表页与最近更新页生效） true | false
+  collapseYear: 0 # 文章列表年份折叠：0 关闭；设为 N（正整数）则仅默认展开最近 N 个年份，更早年份折叠，点击年份可展开/收起
   hoverStyle: underline # box | circle | underline | highlight | strike-through | crossed-off # 鼠标悬浮在文章列表上时的样式
   hoverColor: "#4f7dde" # 鼠标悬浮在文章列表上时的颜色
   animationDuration: 800 # 鼠标悬浮在文章列表上时的动画时长,单位ms毫秒
@@ -139,7 +155,10 @@ imageShow:
 # A4默认中文使用霞鹜文楷，如果你想关闭这种字体，首先保证enable为 true 接着可以开关对应字体
 font:
   enable: false # 是否使用字体开关功能
+  webfont: true # 是否从 CDN 加载霞鹜文楷 web 字体；false 时不再请求 CDN（改用系统字体栈，页面加载更快）
   LXGWWenKai: true # 霞鹜文楷 如果关闭，中文则使用的是 思源宋体，思源宋体不提供关闭
+  googleFontUrl: "" # 自定义字体样式链接：填入 Google Fonts 等字体 CSS 的 URL，留空则不加载
+  googleFontFamily: "" # 自定义字体族名：对应 googleFontUrl 中的字体名，填写后优先应用于全站正文，留空则不覆盖
 
 # 图片幻灯片配置
 lightgallery:
