@@ -206,7 +206,7 @@ comment:
     dataInputPosition: bottom # data-input-position
     dataTheme: preferred_color_scheme # data-theme
     dataLang: zh-CN # data-lang
-    dataLoading: # data-loading，选填
+    dataLoading: lazy # data-loading，选填
     crossorigin: anonymous # crossorigin
     async: true # async
 
