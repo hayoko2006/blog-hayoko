@@ -77,7 +77,7 @@ mathjax:
 
 # 是否启用一些特色工具 false | true
 tool:
-  darkMode: true # 暗黑模式
+  darkMode: false # 暗黑模式
   returnToTop: true # 回到顶部按钮
   returnToLast: true # 回退页面按钮
   topToc: true # 文章顶部目录
@@ -128,7 +128,7 @@ listInfo:
 # 你可能会用到的 https://ninojay.top/2023/website-cdn/
 cdn:
   enable: false # 如果你修改了 css/js ，也许需要把cdn设置为false才会生效
-  choose: zzko  # zzko | aliyun | unpkg| jsdelivr  # 都调整为利于国内的cdn，建议使用默认的 zzko 即可
+  choose: aliyun  # zzko | aliyun | unpkg| jsdelivr  # 都调整为利于国内的cdn，建议使用默认的 zzko 即可
   # 因为是免费CDN，所以有挂的风险，一旦发现网站样式出现原来没有的问题，请尝试关闭CDN
 
 # 实验性功能：A4色调调整：颜色搭配是很主观的行为
@@ -174,8 +174,8 @@ lightgallery:
 # 评论插件：需要根据教程自行部署评论服务
 # ---------------------------------------------------------------------------------------
 comment:
-  enable: false
-  use: waline # values: waline、twikoo、giscus、artalk
+  enable: true
+  use: giscus # values: waline、twikoo、giscus、artalk
 
   # Waline
   # See: https://waline.js.org/guide/get-started.html
@@ -194,10 +194,10 @@ comment:
   # Giscus
   # See: https://giscus.app
   giscus:
-    dataRepo: # data-repo，必填
-    dataRepoId: # data-repo-id，必填
-    dataCategory: # data-category，选填
-    dataCategoryId: # data-category-id，data-mapping="number"时不填，其他情况下必填
+    dataRepo: hayoko2006/blog-pinglun # data-repo，必填
+    dataRepoId: R_kgDOVGE_Ow # data-repo-id，必填
+    dataCategory: Show and tell # data-category，选填
+    dataCategoryId: DIC_kwDOVGE_O84DIEAF # data-category-id，data-mapping="number"时不填，其他情况下必填
     dataMapping: pathname # data-mapping
     dataTerm: # data-term，data-mapping="number"或"specific"时必填，其他情况下不填
     dataStrict: "0" # data-strict
