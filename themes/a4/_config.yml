@@ -54,6 +54,7 @@ baseElement:
   target: "" # 目标窗口
 
 post:
+# 文章页面的其他配置
   footer: 💗做一个清醒且高认知的现代人💗
   themeInfo: true # 是否开启底部右侧声明本站信息
   width: middle  #  middle | big
