@@ -31,7 +31,7 @@ index:  # 首页相关配置
   pagination: false # 首页文章列表分页（需同时开启 list；每页篇数取站点根配置 per_page），开启后自动生成上一页/下一页导航
 
 footerLink: # 底部的链接自定义
-  info: © 2006-现在 何欣雨   # info这个单词不能修改，不想使用可为空
+  info: © 2006-2026 何欣雨 hayoko   # info这个单词不能修改，不想使用可为空
   
   
   # 添加链接格式 举例
@@ -83,7 +83,7 @@ tool:
   topToc: true # 文章顶部目录
   leftToc: true # 文章左侧目录 目前仅支持大屏幕浮现
   verticalWriting: false # 全局竖排（writing-mode: vertical-rl）；可在某篇文章 front-matter 用 vertical: true / false 单独开关
-  search: false # 站内搜索（开启后文章列表页显示搜索框；搜索数据由主题内置生成器输出的 /search.xml 提供，无需安装插件）
+  search: true # 站内搜索（开启后文章列表页显示搜索框；搜索数据由主题内置生成器输出的 /search.xml 提供，无需安装插件）
   copyCode: true # 代码块一键复制按钮
   mobileToc: true # 移动端抽屉式目录（小屏幕下按钮呼出文章目录）
   recentUpdatePost: true # list页面将会新增一个“最近更新”模块，展示最近3篇文章，最近更新可点击跳转至 "最近更新列表页面"
