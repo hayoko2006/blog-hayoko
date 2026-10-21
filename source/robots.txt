@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blog.hayoko.cn/sitemap.xml
+Sitemap: https://blog.hayoko.cn/baidu-sitemap.xml
