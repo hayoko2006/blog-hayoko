@@ -117,6 +117,28 @@ sitemap:
 baidusitemap:
   path: baidu-sitemap.xml
 
+# Feed (RSS / Atom 订阅)
+## 插件：hexo-generator-feed
+## 输出 https://blog.hayoko.cn/atom.xml 与 https://blog.hayoko.cn/rss2.xml
+## autodiscovery 会在每个页面 <head> 里自动注入 <link rel="alternate">，
+## 阅读器（Follow / Feedly / Miniflux 等）访问站点即可自动发现订阅源
+feed:
+  enable: true
+  type:
+    - atom
+    - rss2
+  path:
+    - atom.xml
+    - rss2.xml
+  limit: 20 # 订阅源里最多包含最近 20 篇，设为 0 或 false 输出全部
+  hub: ''
+  content: true # 输出全文，订阅者无需跳转即可在阅读器里读完
+  content_limit: 140 # content 为 false 时，摘要截取的长度
+  content_limit_delim: ' '
+  order_by: -date
+  icon: /images/my-photo-1.png
+  autodiscovery: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 #部署到github pages 但我已经使用别的服务了。
