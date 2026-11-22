@@ -11,7 +11,7 @@
 
     <body>
         <% if(theme.tool.darkMode) { %>
-        <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.80/darkreader.min.js"></script>
+        <script src="<%= url_for('/js/vendor/darkreader.min.js') %>"></script>
         <script>
             const drOptions = {
                 brightness: 100,

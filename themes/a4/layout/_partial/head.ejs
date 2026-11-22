@@ -22,69 +22,31 @@
     <link rel="alternate icon" type="image/webp" href="<%- url_for(theme.favicon) %>">
     <title><%= (theme.displayTitleInTab && page.title ? page.title + ' | ' : '') + config.title + (config.subtitle ? ' | ' + config.subtitle : '') %></title>
 
-    <% if(theme.cdn.enable && theme.cdn.choose != "") { %>
-        <% var cdnPath = "" %>
-        <% if(theme.cdn.choose == "aliyun") { cdnPath = "https://npm.elemecdn.com/hexo-theme-a4@latest/source/css/" %>
-        <% } else if(theme.cdn.choose == "jsdelivr") { cdnPath = "https://jsd.onmicrosoft.cn/npm/hexo-theme-a4@latest/source/css/" %>
-        <% } else if(theme.cdn.choose == "zzko") { cdnPath = "https://jsd.cdn.zzko.cn/npm/hexo-theme-a4@latest/source/css/" %>
-        <% } else if(theme.cdn.choose == "unpkg") { cdnPath = "https://npm.onmicrosoft.cn/hexo-theme-a4@latest/source/css/" %>
-        <% } %>
-        <% if(cdnPath != "") { %>
-            <%- css(cdnPath + 'highlight/style1.css') %>
-            <%- css(cdnPath + 'a11y-dark.min.css') %>
-            <%- css(cdnPath + 'reset.css') %>
-            <%- css(cdnPath + 'markdown.css') %>
-            <%- css(cdnPath + 'fonts.css') %>
+    <%- css('css/highlight/style1.css') %>
+    <%- css('css/a11y-dark.min.css') %>
+    <%- css('css/reset.css') %>
+    <%- css('css/markdown.css') %>
+    <%- css('css/fonts.css') %>
+     <!--注意：首页既不是post也不是page-->
+    <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
+        <%- css('css/waline.css') %>
+    <% } %>
 
-            <!--注意：首页既不是post也不是page-->
-            <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
-                <%- css(cdnPath + 'waline.css') %>
-            <% } %>
+    <%- css('css/ui.css') %>
+    <%- css('css/style.css') %>
 
-            <%- css(cdnPath + 'ui.css') %>
-            <%- css(cdnPath + 'style.css') %>
-
-            <!--返回顶部css-->
-            <% if(theme.tool.returnToTop) { %>
-                <%- css(cdnPath + 'returnToTop.css') %>
-                <%- css(cdnPath + 'unicons.css') %>
-            <% } %>
-            <% if(theme.tool.leftToc) { %>
-                <!--目录-->
-                <%- css(cdnPath + 'toc.css') %>
-            <% } %>
-            <% if(theme.index.waterfall) { %>
-                <!--瀑布流-->
-                <%- css(cdnPath + 'waterfall.css') %>
-            <% } %>
-        <% } %>
-    <% } else { %>
-        <%- css('css/highlight/style1.css') %>
-        <%- css('css/a11y-dark.min.css') %>
-        <%- css('css/reset.css') %>
-        <%- css('css/markdown.css') %>
-        <%- css('css/fonts.css') %>
-         <!--注意：首页既不是post也不是page-->
-        <% if((is_post() || is_page()) && theme.comment.enable && (!page.hasOwnProperty('comment') ||(page.hasOwnProperty('comment') && page.comment))) { %>
-            <%- css('css/waline.css') %>
-        <% } %>
-
-        <%- css('css/ui.css') %>
-        <%- css('css/style.css') %>
-
-        <% if(theme.tool.returnToTop) { %>
-            <!--返回顶部css-->
-            <%- css('css/returnToTop.css') %>
-            <%- css('css/unicons.css') %>
-        <% } %>
-        <% if(theme.tool.leftToc) { %>
-            <!--目录-->
-            <%- css('css/toc.css') %>
-        <% } %>
-        <% if(theme.index.waterfall) { %>
-            <!--瀑布流-->
-            <%- css('css/waterfall.css') %>
-        <% } %>
+    <% if(theme.tool.returnToTop) { %>
+        <!--返回顶部css-->
+        <%- css('css/returnToTop.css') %>
+        <%- css('css/unicons.css') %>
+    <% } %>
+    <% if(theme.tool.leftToc) { %>
+        <!--目录-->
+        <%- css('css/toc.css') %>
+    <% } %>
+    <% if(theme.index.waterfall) { %>
+        <!--瀑布流-->
+        <%- css('css/waterfall.css') %>
     <% } %>
 
     <% if(theme.tool.returnToLast) { %>
@@ -112,11 +74,7 @@
         >
     <% } %>
 
-    <!-- <link rel="stylesheet" href="https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css" /> -->
-    <% if(theme.font.webfont !== false) { %>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkai@3.0.0/dist/LXGWWenKai-Regular/result.css' />
-    <% } %>
+    <!-- 霞鹜文楷字体已在 css/fonts.css 中本地加载，不再请求远程 CDN -->
 
     <% if(theme.font.googleFontUrl) { %>
         <!--自定义字体链接：支持填入 Google Fonts 或其他字体 CSS 的 URL，留空则不加载-->
@@ -133,5 +91,5 @@
                 }
             };
         </script>
-        <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script async src="<%= url_for('/js/vendor/mathjax/es5/tex-mml-chtml.js') %>"></script>
     <% } %>
